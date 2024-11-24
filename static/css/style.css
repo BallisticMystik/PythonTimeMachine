@@ -1,0 +1,209 @@
+@import url("https://cdn.jsdelivr.net/npm/tailwindcss@3.4.3/base.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Honk&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow-y: auto;
+  background-color: black;
+  color: white;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+img {
+  opacity: 0.5;
+}
+
+#circle {
+  position: relative;
+  text-align: center;
+  width: 60px;
+  height: 60px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  border: 1px solid darkorange;
+  background: rgba(255, 165, 0, 0.5);
+  font-size: 50px;
+  font-family: Times New Roman;
+  color: rgba(255, 165, 0, 1);
+  cursor: pointer;
+}
+
+.font-orbitron {
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.font-bungee-spice {
+  font-family: 'Bungee Spice', cursive;
+}
+
+.font-pacifico {
+  font-family: 'Pacifico', cursive;
+}
+
+.font-honk {
+  font-family: 'Honk', cursive;
+  font-size: 36px;
+}
+
+.font-vt323 {
+  font-family: 'VT323', monospace;
+}
+
+.pixelated {
+  image-rendering: pixelated;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
+}
+
+.shadow-neon {
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #ff00de, 0 0 35px #ff00de, 0 0 40px #00ffea, 0 0 50px #ff00de, 0 0 75px #ff00de;
+}
+
+.text-orange-400 {
+  color: #FB923C;
+}
+
+.hover\:text-orange-300:hover {
+  color: #FDBA74;
+}
+
+.border-purple-500 {
+  border-color: #8B5CF6;
+}
+
+.text-purple-500 {
+  color: #8B5CF6;
+}
+
+.text-green-400 {
+  color: #4ADE80;
+}
+
+.bg-gray-900 {
+  background-color: #111827;
+}
+
+@keyframes trace {
+  0% {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.animate-trace {
+  animation: trace 3s linear infinite;
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+}
+
+.border-turquoise {
+  border-color: #40E0D0;
+}
+
+.text-turquoise {
+  color: #40E0D0;
+}
+
+.shadow-turquoise {
+  text-shadow: 0 2px 0 #40E0D0;
+}
+
+.hover\:scale-110:hover {
+  transform: scale(1.1);
+}
+
+.transition-transform {
+  transition-property: transform;
+}
+
+.duration-300 {
+  transition-duration: 300ms;
+}
+
+.ease-in-out {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.shadow-purple {
+  box-shadow: 0 0 10px rgba(128, 0, 128, 0.5);
+}
+
+.hover\:shadow-purple-bright:hover {
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.8), 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.bg-opacity-50 {
+  --tw-bg-opacity: 0.5;
+}
+
+.shadow-white {
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.3), 0 0 10px rgba(255, 255, 255, 0.2);
+}
+.shadow-glow {
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5);
+}
+.hover\:shadow-purple-bright:hover {
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.8), 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+.font-pacifico {
+  font-family: 'Pacifico', cursive;
+}
+.performance-container {
+    background: linear-gradient(45deg, rgba(0, 128, 0, 0.1), rgba(128, 0, 128, 0.1));
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #00ff00, #800080) 1;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.3), 0 0 20px rgba(128, 0, 128, 0.3);
+    transition: transform 0.3s ease-in-out;
+    margin-top: 30px;
+}
+.performance-container:hover {
+    transform: scale(1.05);
+}
+.performance-title {
+    font-family: 'Bungee Spice', cursive;
+    font-size: 36px;
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+}
+.performance-text {
+    font-family: 'VT323', monospace;
+    font-size: 24px;
+    text-shadow: 0 0 5px #00ffff;
+}
+.performance-stats {
+    background-color: rgba(0, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 6px;
+}
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  padding-bottom: 50px;
+}

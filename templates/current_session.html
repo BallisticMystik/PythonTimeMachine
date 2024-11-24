@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Sessions</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-black text-white font-sans leading-normal tracking-normal">
+    <div id="canvas-container" class="fixed top-0 left-0 w-full h-full z-0"></div>
+    <div class="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center items-center">
+        <h1 class="text-4xl font-bold mb-8">Current Sessions</h1>
+        <div id="sessions-list" class="w-full max-w-2xl">
+            <!-- Sessions will be dynamically added here -->
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/background.js') }}"></script>
+    <script>
+        // Fetch and display current sessions
+        fetch('/api/current_sessions')
+            .then(response => response.json())
+            .then(sessions => {
+                const sessionsList = document.getElementById('sessions-list');
+                sessions.forEach(session => {
+                    const sessionElement = document.createElement('div');
+                    sessionElement.className = 'bg-gray-800 p-4 mb-4 rounded';
+                    sessionElement.innerHTML = `
+                        <h2 class="text-xl font-bold">${session.ticker}</h2>
+                        <p>Account Percentage: ${session.account_percentage}%</p>
+                        <p>Leverage: ${session.leverage}x</p>
+                        <p>Stop Loss: ${session.stoploss}%</p>
+                        <p>Time Frame: ${session.timeframe}</p>
+                        <p>Active: ${session.active ? 'Yes' : 'No'}</p>
+                    `;
+                    sessionsList.appendChild(sessionElement);
+                });
+            })
+            .catch(error => console.error('Error fetching sessions:', error));
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previous Sessions - Jobu Ninja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="bg-black text-white font-sans leading-normal tracking-normal">
+    <div id="canvas-container" class="fixed top-0 left-0 w-full h-full z-0"></div>
+    <div class="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center items-center">
+        <a href="{{ url_for('dashboard') }}" class="text-white hover:text-gray-300 text-2xl mt-8 font-vt323 pixelated">&larr; Back to Dashboard</a>
+        <h1 class="text-6xl font-bold text-center font-bungee-spice text-cyan-400 shadow-neon mb-12">Previous Sessions</h1>
+        <div class="w-full max-w-4xl bg-gray-800 p-6 rounded-lg shadow-lg">
+            {% if trade_history %}
+                <table class="w-full">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 text-left text-cyan-300">Order ID</th>
+                            <th class="px-4 py-2 text-left text-cyan-300">Instrument</th>
+                            <th class="px-4 py-2 text-left text-cyan-300">Side</th>
+                            <th class="px-4 py-2 text-left text-cyan-300">Amount</th>
+                            <th class="px-4 py-2 text-left text-cyan-300">Price</th>
+                            <th class="px-4 py-2 text-left text-cyan-300">Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trade in trade_history %}
+                            <tr>
+                                <td class="px-4 py-2 text-cyan-300">{{ trade.order_id }}</td>
+                                <td class="px-4 py-2 text-cyan-300">{{ trade.instrument_name }}</td>
+                                <td class="px-4 py-2 text-cyan-300">{{ 'Buy' if trade.is_buy else 'Sell' }}</td>
+                                <td class="px-4 py-2 text-cyan-300">{{ trade.amount }}</td>
+                                <td class="px-4 py-2 text-cyan-300">{{ trade.price }}</td>
+                                <td class="px-4 py-2 text-cyan-300">{{ trade.timestamp }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="text-center text-cyan-300 text-xl">No trade history found.</p>
+            {% endif %}
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/background.js') }}"></script>
+</body>
+</html>

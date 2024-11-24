@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Session</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="bg-black text-white font-sans leading-normal tracking-normal">
+    <div id="canvas-container" class="fixed top-0 left-0 w-full h-full z-0"></div>
+    <div class="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center items-center">
+        <h1 class="text-6xl font-bold mb-8 text-cyan-400 shadow-neon">Create Session</h1>
+        <div class="flex flex-wrap justify-center items-start gap-8 w-full">
+            <div class="performance-container p-6 rounded-lg shadow-lg w-full max-w-md flex-1 bg-opacity-50">
+                <h2 class="text-2xl font-bold mb-4 text-cyan-300">================== Account Overview ==================</h2>
+<form method="POST" action="{{ url_for('create_session') }}">
+    {{ form.hidden_tag() }}
+    <div class="grid grid-cols-2 gap-4">
+        <div class="col-span-2 mb-6 bg-gray-800 p-4 rounded-lg">
+            <h3 class="text-xl font-bold mb-4 text-cyan-300">Test Webhook</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-cyan-300 text-xl font-bold mb-2">Test Ticker:</label>
+                    <select id="test-ticker" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl">
+                        <option value="BTC-PERP">BTC-PERP</option>
+                        <option value="ETH-PERP">ETH-PERP</option>
+                        <option value="SEI-PERP">SEI-PERP</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-cyan-300 text-xl font-bold mb-2">Order Direction:</label>
+                    <select id="test-direction" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl">
+                        <option value="buy">Buy</option>
+                        <option value="sell">Sell</option>
+                    </select>
+                </div>
+                <div class="col-span-2">
+                    <button id="send-test-webhook" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        Send Test Webhook
+                    </button>
+                </div>
+                <div id="test-response" class="col-span-2 hidden">
+                    <div class="bg-gray-700 p-4 rounded-lg">
+                        <h4 class="text-lg font-bold mb-2 text-cyan-300">Webhook Response:</h4>
+                        <pre id="test-response-content" class="text-white overflow-x-auto"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <label class="block text-cyan-300 text-xl font-bold mb-2">Account Percentage:</label>
+            <input type="range" id="account-percentage" name="account_percentage" min="0" max="100" value="0" class="w-full">
+            <output for="account-percentage" class="ml-2 text-cyan-300 text-xl">0%</output>
+        </div>
+        <div>
+            <label class="block text-cyan-300 text-xl font-bold mb-2">Leverage:</label>
+            <select id="leverage" name="leverage" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl">
+                <option value="1">1x</option>
+                <option value="2">2x</option>
+                <option value="5">5x</option>
+                <option value="10">10x</option>
+                <option value="20">20x</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-cyan-300 text-xl font-bold mb-2">Position:</label>
+            <select id="position" name="position" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl">
+                <option value="long">Long</option>
+                <option value="short">Short</option>
+            </select>
+        </div>
+        <div>
+        </div>
+            </select>
+        </div>
+        <div>
+            <label class="block text-cyan-300 text-xl font-bold mb-2">Stop Loss:</label>
+            {{ form.stoploss(class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl") }}
+        </div>
+        <div>
+            <label class="block text-cyan-300 text-xl font-bold mb-2">Ticker:</label>
+            <select id="ticker" name="ticker" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl">
+                <option value="BTC-PERP">BTC-PERP</option>
+                <option value="SEI-PERP">SEI-PERP</option>
+                <option value="ETH-PERP">ETH-PERP</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-cyan-300 text-xl font-bold mb-2">Timeframe:</label>
+            <select id="timeframe" name="timeframe" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl">
+                <option value="1min">1min</option>
+                <option value="5min">5min</option>
+                <option value="10min">10min</option>
+                <option value="15min">15min</option>
+                <option value="30min">30min</option>
+                <option value="45min">45min</option>
+                <option value="1h">1h</option>
+                <option value="4h">4h</option>
+                <option value="1d">1d</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-cyan-300 text-xl font-bold mb-2">Immediate Entry:</label>
+            <input type="checkbox" id="immediate-entry" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-xl">
+        </div>
+        <div class="col-span-2">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create Session</button>
+        </div>
+    </div>
+</form>
+<div id="order-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center">
+    <div class="bg-white text-black p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4">Order Confirmation</h2>
+        <p id="order-details" class="mb-4"></p>
+        <button id="close-modal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Close</button>
+    </div>
+</div>
+            </div>
+            <div class="performance-container p-6 rounded-lg shadow-lg w-full max-w-md flex-1 bg-opacity-50">
+                <h2 class="text-2xl font-bold mb-4 text-cyan-300">================== Session Details ==================</h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-cyan-300 text-xl font-bold mb-2">Account Balance:</label>
+                        <p id="account-balance" class="text-cyan-300 text-xl">${{ account_balance if account_balance is not none else '0.00' }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-cyan-300 text-xl font-bold mb-2">Leverage:</label>
+                        <p id="leverage-display" class="text-cyan-300 text-xl">1x</p>
+                    </div>
+                    <div>
+                        <label class="block text-cyan-300 text-xl font-bold mb-2">Buying Power:</label>
+                        <p id="buying-power" class="text-cyan-300 text-xl">$0.00</p>
+                    </div>
+                    <div>
+                        <label class="block text-cyan-300 text-xl font-bold mb-2">Position Value:</label>
+                        <p id="position-value" class="text-cyan-300 text-xl">$0.00</p>
+                    </div>
+                    <div>
+                        <label class="block text-cyan-300 text-xl font-bold mb-2">Required Margin:</label>
+                        <p id="required-margin" class="text-cyan-300 text-xl">$0.00</p>
+                    </div>
+                    <div>
+                        <label class="block text-cyan-300 text-xl font-bold mb-2">Liquidation Price:</label>
+                        <p id="liquidation-price" class="text-cyan-300 text-xl">$0.00</p>
+                    </div>
+                    <div>
+                        <label class="block text-cyan-300 text-xl font-bold mb-2">Fees:</label>
+                        <p id="fees" class="text-cyan-300 text-xl">$0.00</p>
+                    </div>
+                    <div>
+                        <label class="block text-cyan-300 text-xl font-bold mb-2">Order Size:</label>
+                        <p id="order-size" class="text-cyan-300 text-xl">0.000000 units</p>
+                    </div>
+                    <div>
+                        <label class="block text-cyan-300 text-xl font-bold mb-2">Market Price:</label>
+                        <p id="market-price" class="text-cyan-300 text-xl">$0.00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="{{ url_for('get_instruments') }}" class="text-white hover:text-gray-300 text-2xl mt-8 font-vt323 pixelated">View Instruments</a>
+        <a href="{{ url_for('get_instrument_price', instrument_name='BTC-PERP') }}" class="text-white hover:text-gray-300 text-2xl mt-8 font-vt323 pixelated">Get BTC-PERP Price</a>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const accountPercentage = document.getElementById('account-percentage');
+            const leverageSelect = document.getElementById('leverage');
+            const accountBalance = document.getElementById('account-balance');
+            const buyingPower = document.getElementById('buying-power');
+            const positionValue = document.getElementById('position-value');
+            const requiredMargin = document.getElementById('required-margin');
+            const liquidationPrice = document.getElementById('liquidation-price');
+            const fees = document.getElementById('fees');
+            const orderSize = document.getElementById('order-size');
+            const accountPercentageOutput = document.querySelector('output[for="account-percentage"]');
+            const leverageDisplay = document.getElementById('leverage-display');
+            const tickerSelect = document.getElementById('ticker');
+            const marketPriceDisplay = document.getElementById('market-price');
+            const createSessionButton = document.querySelector('button[type="submit"]');
+            const orderModal = document.getElementById('order-modal');
+            const orderDetails = document.getElementById('order-details');
+            const closeModal = document.getElementById('close-modal');
+            let currentPrice = 0;
+
+            function fetchInstrumentPrice(instrumentName) {
+                fetch(`/get_instrument_price/${instrumentName}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.error) {
+                            console.error('Error fetching instrument price:', data.error);
+                            return;
+                        }
+                        currentPrice = parseFloat(data.price);
+                        if (marketPriceDisplay) marketPriceDisplay.textContent = `$${currentPrice.toFixed(2)}`;
+                        updateValues();
+                    })
+                    .catch(error => console.error('Error fetching instrument price:', error));
+            }
+
+            function updateValues() {
+                const percentage = parseFloat(accountPercentage.value) || 0;
+                const leverage = parseFloat(leverageSelect.value) || 1;
+                const balance = parseFloat(accountBalance.textContent.replace('$', '').replace(',', '')) || 0;
+                const buyingPowerValue = balance * leverage;
+                const selectedAmount = (balance * percentage) / 100;
+                const positionSize = selectedAmount * leverage / currentPrice;
+
+                const positionValueAmount = positionSize * currentPrice;
+                const requiredMarginValue = positionValueAmount / leverage;
+                const liquidationPriceValue = currentPrice * (1 - 1 / leverage);
+                const feesValue = positionSize * 0.0025; // Assuming 0.25% fee
+
+                if (buyingPower) buyingPower.textContent = `$${buyingPowerValue.toFixed(2)}`;
+                if (positionValue) positionValue.textContent = `$${positionValueAmount.toFixed(2)}`;
+                if (requiredMargin) requiredMargin.textContent = `$${requiredMarginValue.toFixed(2)}`;
+                if (liquidationPrice) liquidationPrice.textContent = `$${liquidationPriceValue.toFixed(2)}`;
+                if (fees) fees.textContent = `$${feesValue.toFixed(6)}`;
+                if (orderSize) orderSize.textContent = `${positionSize.toFixed(6)} units`;
+                if (accountPercentageOutput) accountPercentageOutput.value = `${percentage}%`;
+                if (leverageDisplay) leverageDisplay.textContent = `${leverage}x`;
+            }
+
+            if (accountPercentage) {
+                accountPercentage.addEventListener('input', updateValues);
+            }
+            if (leverageSelect) {
+                leverageSelect.addEventListener('change', updateValues);
+            }
+            if (tickerSelect) {
+                tickerSelect.addEventListener('change', function() {
+                    const instrumentName = this.value;
+                    if (instrumentName) {
+                        fetchInstrumentPrice(instrumentName);
+                    }
+                });
+            }
+
+            if (createSessionButton) {
+                createSessionButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const formData = new FormData(document.querySelector('form'));
+                    fetch('/create_session', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.errors) {
+                            console.error('Error creating session:', data.errors);
+                            alert('Error creating session. Please check the form and try again.');
+                        } else {
+                            console.log('Session created successfully:', data);
+                            alert('Session created successfully!');
+                            // Display the payload
+                            const payloadDisplay = document.createElement('div');
+                            payloadDisplay.innerHTML = '<h3>Session Payload:</h3><pre>' + JSON.stringify(data, null, 2) + '</pre>';
+                            document.querySelector('.container').appendChild(payloadDisplay);
+
+                            // Show order details in modal
+                            const order = data.order_response;
+                            orderDetails.innerHTML = `
+                                <strong>Instrument:</strong> ${order.instrument}<br>
+                                <strong>Side:</strong> ${order.is_buy ? 'Buy' : 'Sell'}<br>
+                                <strong>Size:</strong> ${order.amount}<br>
+                                <strong>Price:</strong> ${order.limit_price}<br>
+                                <strong>Status:</strong> ${order.status || 'Unknown'}
+                            `;
+                            orderModal.classList.remove('hidden');
+                        }
+                    })
+                    .catch(error => console.error('Error creating session:', error));
+                });
+            }
+
+            if (closeModal) {
+                closeModal.addEventListener('click', function() {
+                    orderModal.classList.add('hidden');
+                });
+            }
+
+            // Initial update
+            if (tickerSelect && tickerSelect.value) {
+                fetchInstrumentPrice(tickerSelect.value);
+            } else {
+                updateValues();
+            }
+        });
+
+        // Test webhook functionality
+        document.getElementById('send-test-webhook').addEventListener('click', function() {
+            const ticker = document.getElementById('test-ticker').value;
+            const direction = document.getElementById('test-direction').value;
+            
+            const webhookData = {
+                key: 'TOPX',
+                ticker: ticker,
+                strategy: {
+                    order_action: direction
+                }
+            };
+
+            fetch('/webhook', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(webhookData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                const responseElement = document.getElementById('test-response');
+                const responseContent = document.getElementById('test-response-content');
+                responseElement.classList.remove('hidden');
+                responseContent.textContent = JSON.stringify(data, null, 2);
+                
+                if (data.status === 'success') {
+                    alert('Test webhook sent successfully!');
+                } else {
+                    alert('Error sending test webhook: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error sending test webhook: ' + error.message);
+            });
+        });
+    </script>
+</body>
+</html>

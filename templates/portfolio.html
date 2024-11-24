@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Jobu Ninja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="bg-black text-white font-sans leading-normal tracking-normal">
+    <div id="canvas-container" class="fixed top-0 left-0 w-full h-full z-0"></div>
+    <div class="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center items-center">
+        <a href="{{ url_for('dashboard') }}" class="text-white hover:text-gray-300 text-2xl mt-8 font-vt323 pixelated">&larr; Back to Dashboard</a>
+        <h1 class="text-6xl font-bold text-center font-bungee-spice text-cyan-400 shadow-neon mb-12">Portfolio</h1>
+        <div class="performance-container p-6 rounded-lg shadow-lg w-full max-w-2xl">
+            <div class="performance-stats">
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Balance: <span class="font-bold">{{ portfolio_data.get('balance', 'N/A') }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">PNL: <span class="font-bold">{{ portfolio_data.get('pnl', 'N/A') }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Realized PNL: <span class="font-bold">{{ portfolio_data.get('realized_pnl', 'N/A') }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Profit Factor: <span class="font-bold">{{ portfolio_data.get('profit_factor', 'N/A') }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Win Rate: <span class="font-bold">{{ portfolio_data.get('win_rate', 'N/A') }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Sharpe Ratio: <span class="font-bold">{{ portfolio_data.get('sharpe_ratio', 'N/A') }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">User Margin Used: <span class="font-bold">{{ portfolio_data.get('user_margin', {}).get('used', 'N/A') }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">User Margin Balance: <span class="font-bold">{{ portfolio_data.get('user_margin', {}).get('balance', 'N/A') }}</span></p>
+                <h2 class="text-3xl font-bold mb-4 text-cyan-400">Greeks:</h2>
+                {% for greek in portfolio_data['greeks'] %}
+                    <div class="mb-4 bg-gray-700 p-4 rounded-lg">
+                        <p class="text-cyan-300 pixelated text-xl">Asset: <span class="font-bold">{{ greek['asset'] }}</span></p>
+                        <p class="text-cyan-300 pixelated text-xl">Delta: <span class="font-bold">{{ greek['delta'] }}</span></p>
+                        <p class="text-cyan-300 pixelated text-xl">Gamma: <span class="font-bold">{{ greek['gamma'] }}</span></p>
+                        <p class="text-cyan-300 pixelated text-xl">Rho: <span class="font-bold">{{ greek['rho'] }}</span></p>
+                        <p class="text-cyan-300 pixelated text-xl">Theta: <span class="font-bold">{{ greek['theta'] }}</span></p>
+                        <p class="text-cyan-300 pixelated text-xl">Vega: <span class="font-bold">{{ greek['vega'] }}</span></p>
+                    </div>
+                {% endfor %}
+            </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/background.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Performance - Jobu Ninja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        .performance-container {
+            background: linear-gradient(45deg, rgba(0, 128, 0, 0.1), rgba(128, 0, 128, 0.1));
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #00ff00, #800080) 1;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3), 0 0 20px rgba(128, 0, 128, 0.3);
+            transition: transform 0.3s ease-in-out;
+            margin-top: 30px;
+        }
+        .performance-container:hover {
+            transform: scale(1.05);
+        }
+        .performance-title {
+            font-family: 'Bungee Spice', cursive;
+            font-size: 36px;
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+        }
+        .performance-text {
+            font-family: 'VT323', monospace;
+            font-size: 18px;
+            text-shadow: 0 0 5px #00ffff;
+        }
+        .performance-stats {
+            background-color: rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 6px;
+        }
+        .pixelated {
+            image-rendering: pixelated;
+            font-smooth: never;
+            -webkit-font-smoothing: none;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-sans leading-normal tracking-normal">
+    <div id="canvas-container" class="fixed top-0 left-0 w-full h-full z--4"></div>
+    <div class="relative z-10 container mx-auto px-4 min-h-screen flex flex-col justify-center items-center space-y-12">
+        <a href="{{ url_for('dashboard') }}" class="absolute top-4 left-4 text-white hover:text-gray-300 text-2xl font-vt323 pixelated">&larr; Back</a>
+        <h2 class="performance-title text-6xl font-bold text-center text-cyan-400 shadow-neon">Account Performance</h2>
+        <div class="performance-container p-6 rounded-lg shadow-lg w-full max-w-2xl">
+            <div class="performance-stats">
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Total Trades Closed: <span id="total-trades-closed" class="font-bold">{{ total_trades_closed }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Trade Win/Loss Ratio: <span id="trade-win-loss-ratio" class="font-bold">{{ trade_win_loss_ratio }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Trade Win/Loss Percentage: <span id="trade-win-loss-percentage" class="font-bold">{{ trade_win_loss_percentage }}%</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Total Profit/Loss: <span id="total-profit-loss" class="font-bold">{{ total_profit_loss }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Best Performing Asset: <span id="best-performing-asset" class="font-bold">{{ best_performing_asset }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Best Performing Time Frame: <span id="best-performing-time-frame" class="font-bold">{{ best_performing_time_frame }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Best Performing Asset + Time Frame: <span id="best-performing-asset-time-frame" class="font-bold">{{ best_performing_asset_time_frame }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Biggest Drawdown: <span id="biggest-drawdown" class="font-bold">{{ biggest_drawdown }}</span></p>
+                <p class="performance-text mb-4 text-cyan-300 pixelated text-2xl">Total Volume Traded: <span id="total-volume-traded" class="font-bold">{{ total_volume_traded }}</span></p>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/background.js') }}"></script>
+</body>
+</html>
